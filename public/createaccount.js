@@ -4,7 +4,7 @@ import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.19.1/firebas
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
-const firebaseConfig = {
+const firebaseConfig = {  
   authDomain: "cs3354-roomtracker.firebaseapp.com",
   projectId: "cs3354-roomtracker",
   storageBucket: "cs3354-roomtracker.appspot.com",
