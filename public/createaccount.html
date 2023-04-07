@@ -22,6 +22,8 @@
       to avoid connecting the SDK to running emulators.
     -->
     <script defer src="/__/firebase/init.js?useEmulator=true"></script>
+
+    <script type="module" src="createaccount.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   </head>
   <body>
@@ -47,8 +49,9 @@
         h2 {text-align: center;}
     </style>
 
-    <h1>Welcome!</h1>
-    <h2>Please Enter Your Desired Credentials Below</h2>
+    <br/>
+    <br/>
+    <h1>Please Enter Your Desired Credentials Below</h1>
 
     <form>
         <div class="form-group">
@@ -61,7 +64,11 @@
             <label for="exampleInputPassword1">Password</label>
             <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
         </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
+         <script type="module"> 
+            import {createAccount} from "./createaccount.js" 
+            window.createAccount = createAccount;
+         </script>
+        <button type="button" class="btn btn-primary" onclick="createAccount(document.getElementById('exampleInputEmail1').value, document.getElementById('exampleInputPassword1').value)">Submit</button>
     </form>
   </body>
 </html>
