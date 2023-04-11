@@ -5,6 +5,7 @@ import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.19.1/firebas
 
 // Your web app's Firebase configuration
 const firebaseConfig = {  
+  
   authDomain: "cs3354-roomtracker.firebaseapp.com",
   projectId: "cs3354-roomtracker",
   storageBucket: "cs3354-roomtracker.appspot.com",
@@ -19,10 +20,11 @@ import { getAuth, createUserWithEmailAndPassword } from 'https://www.gstatic.com
 
 const auth = getAuth();
 
-//var email = "michaeldgrav@gmail.com"
-//var password = "testingtest" // PASSWORD MUST BE 6 CHARACTERS OR LESS 
-export function createAccount(email, password) {
+// PASSWORD MUST BE 6 CHARACTERS OR LESS 
+export function createAccount(email, password, fName, lName) {
     console.log("creating account")
+    console.log("fname in createAccount:" + fName);
+    console.log("lname in createAccount:" +lName);
 
     createUserWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
@@ -31,7 +33,7 @@ export function createAccount(email, password) {
         console.log(user);
         console.log("user uid " + user.uid);
         console.log("user emai " + user.email);
-        addUserToDB(user.uid, user.email)
+        addUserToDB(user.uid, user.email, fName, lName)
         // ...
     })
     .catch((error) => {
@@ -45,16 +47,25 @@ export function createAccount(email, password) {
 import { getFirestore, collection, addDoc } from 'https://www.gstatic.com/firebasejs/9.19.1/firebase-firestore.js';
 const db = getFirestore(app);
 
-async function addUserToDB(userUID, userEmail) {
+async function addUserToDB(userUID, userEmail, fName, lName) {
+    console.log("fname in addUserToDB:" + fName);
+    console.log("lname in addUserToDB:" +lName);
+
     try {
         const docRef = await addDoc(collection(db, "users"), {
-        uid: userUID,
-        email: userEmail
+            uid: userUID,
+            email: userEmail,
+            numRoomsReserved: 0,
+            roomsReserved: [],
+            firstName: fName,
+            lastName: lName
         });
         console.log("Document written with ID: ", docRef.id);
 
         localStorage.setItem("userUID", userUID);
         localStorage.setItem("userEmail", userEmail);
+        localStorage.setItem("userFName", fName);
+        localStorage.setItem("userLName", lName);
         window.location = "index.html";
     } catch (e) {
         console.error("Error adding document: ", e);
