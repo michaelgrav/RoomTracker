@@ -45,32 +45,40 @@
     <style>
         h1 {text-align: center;}
         h2 {text-align: center;}
+        h3 {text-align: center;}
     </style>
+    <div class="container">
+      <br/>
+      <h1>Welcome!</h1>
+      <h2>Please Enter Your Credentials Below</h2>
+      <br/>
 
-    <h1>Welcome!</h1>
-    <h2>Please Enter Your Credentials Below</h2>
+      <form>
+          <div class="form-group">
+              <label for="exampleInputEmail1">Email address</label>
+              <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+          </div>
+          <div class="form-group">
+              <label for="exampleInputPassword1">Password</label>
+              <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+          </div>
+          <script type="module" src="login.js"></script>
+          <script type="module"> 
+            import {login} from "./login.js" 
+            window.login = login;
+          </script>
+          <button type="button" class="btn btn-primary" onclick="login(document.getElementById('exampleInputEmail1').value, document.getElementById('exampleInputPassword1').value)">Login</button>
+      </form>
 
-    <form>
-        <div class="form-group">
-            <label for="exampleInputEmail1">Email address</label>
-            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
-        </div>
-        <div class="form-group">
-            <label for="exampleInputPassword1">Password</label>
-            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-        </div>
-        <script type="module" src="login.js"></script>
-        <script type="module"> 
-          import {login} from "./login.js" 
-          window.login = login;
-        </script>
-        <button type="button" class="btn btn-primary" onclick="login(document.getElementById('exampleInputEmail1').value, document.getElementById('exampleInputPassword1').value)">Login</button>
-    </form>
+      <br/>
+      <br/>
+      <br/>
+      <br/>
+      <br/>
+      <br/>
 
-    <br/>
-    <br/>
-    <br/>
-    <h3>Don't have an account? Create one here: </h3>  
-    <button onclick="window.location='createaccount.html';" class="btn btn-primary">Create Account</button>
+      <h3>Don't have an account? Create one here:   <button onclick="window.location='createaccount.html';" class="btn btn-primary">Create Account</button></h3>  
+    
+    </div>
   </body>
 </html>

@@ -50,38 +50,41 @@
     </style>
 
     <br/>
-    <br/>
-    <h1>Please Enter Your Desired Credentials Below</h1>
+    <div class="container">
+      <h1>Welcome!</h1>
+      <h2>Please Enter Your Desired Credentials Below</h2>
+      <br/>
 
-    <form>
-        <div class="form-row">
-          <div class="col">
-            <label for="firstNameInputField">First Name</label>
-            <input type="text" class="form-control" placeholder="First name" id="firstNameInputField">
+      <form>
+          <div class="form-row">
+            <div class="col">
+              <label for="firstNameInputField">First Name</label>
+              <input type="text" class="form-control" placeholder="First name" id="firstNameInputField">
+            </div>
+            <div class="col">
+              <label for="lastNameInputField">Last Name</label>
+              <input type="text" class="form-control" placeholder="Last name" id="lastNameInputField">
+            </div>
           </div>
-          <div class="col">
-            <label for="lastNameInputField">Last Name</label>
-            <input type="text" class="form-control" placeholder="Last name" id="lastNameInputField">
+          <br/>
+          <div class="form-group">
+              <label for="inputEmail">Email address</label>
+              <input type="email" class="form-control" id="inputEmail" aria-describedby="emailHelp" placeholder="Enter email">
+              <small id="emailHelp" class="form-text text-muted">Be sure you have't created an account with this email before</small>
           </div>
-        </div>
-        <br/>
-        <div class="form-group">
-            <label for="inputEmail">Email address</label>
-            <input type="email" class="form-control" id="inputEmail" aria-describedby="emailHelp" placeholder="Enter email">
-            <small id="emailHelp" class="form-text text-muted">Be sure you have't created an account with this email before</small>
-        </div>
-        <div class="form-group">
-            <label for="inputPassword">Password</label>
-            <input type="password" class="form-control" id="inputPassword" placeholder="Password">
-        </div>
-         <script type="module"> 
-            import {createAccount} from "./createaccount.js" 
-            window.createAccount = createAccount;
-         </script>
-        <button type="button" class="btn btn-primary" 
-          onclick="createAccount(document.getElementById('inputEmail').value, document.getElementById('inputPassword').value, 
-          document.getElementById('firstNameInputField').value, document.getElementById('lastNameInputField').value)">Create Account
-        </button>
-    </form>
+          <div class="form-group">
+              <label for="inputPassword">Password</label>
+              <input type="password" class="form-control" id="inputPassword" placeholder="Password">
+          </div>
+          <script type="module"> 
+              import {createAccount} from "./createaccount.js" 
+              window.createAccount = createAccount;
+          </script>
+          <button type="button" class="btn btn-primary" 
+            onclick="createAccount(document.getElementById('inputEmail').value, document.getElementById('inputPassword').value, 
+            document.getElementById('firstNameInputField').value, document.getElementById('lastNameInputField').value)">Create Account
+          </button>
+      </form>
+    </div>
   </body>
 </html>
