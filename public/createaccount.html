@@ -54,21 +54,34 @@
     <h1>Please Enter Your Desired Credentials Below</h1>
 
     <form>
+        <div class="form-row">
+          <div class="col">
+            <label for="firstNameInputField">First Name</label>
+            <input type="text" class="form-control" placeholder="First name" id="firstNameInputField">
+          </div>
+          <div class="col">
+            <label for="lastNameInputField">Last Name</label>
+            <input type="text" class="form-control" placeholder="Last name" id="lastNameInputField">
+          </div>
+        </div>
+        <br/>
         <div class="form-group">
-            <label for="exampleInputEmail1">Email address</label>
-            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+            <label for="inputEmail">Email address</label>
+            <input type="email" class="form-control" id="inputEmail" aria-describedby="emailHelp" placeholder="Enter email">
             <small id="emailHelp" class="form-text text-muted">Be sure you have't created an account with this email before</small>
-
         </div>
         <div class="form-group">
-            <label for="exampleInputPassword1">Password</label>
-            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+            <label for="inputPassword">Password</label>
+            <input type="password" class="form-control" id="inputPassword" placeholder="Password">
         </div>
          <script type="module"> 
             import {createAccount} from "./createaccount.js" 
             window.createAccount = createAccount;
          </script>
-        <button type="button" class="btn btn-primary" onclick="createAccount(document.getElementById('exampleInputEmail1').value, document.getElementById('exampleInputPassword1').value)">Submit</button>
+        <button type="button" class="btn btn-primary" 
+          onclick="createAccount(document.getElementById('inputEmail').value, document.getElementById('inputPassword').value, 
+          document.getElementById('firstNameInputField').value, document.getElementById('lastNameInputField').value)">Create Account
+        </button>
     </form>
   </body>
 </html>
