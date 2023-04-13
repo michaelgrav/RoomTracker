@@ -27,6 +27,7 @@ export function login(email, password) {
       const user = userCredential.user;
       localStorage.setItem("userUID", user.uid);
       localStorage.setItem("userEmail", user.email);
+
       window.location = "index.html";
       // ...
     })
