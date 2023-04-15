@@ -5,7 +5,7 @@ import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.19.1/firebas
 
 // Your web app's Firebase configuration
 const firebaseConfig = { 
-  
+  apiKey: "AIzaSyClWTm6yvT2-ETV_jOYVkiZQLQWzp2iY2s", 
   authDomain: "cs3354-roomtracker.firebaseapp.com",
   projectId: "cs3354-roomtracker",
   storageBucket: "cs3354-roomtracker.appspot.com",
@@ -27,6 +27,7 @@ export function login(email, password) {
       const user = userCredential.user;
       localStorage.setItem("userUID", user.uid);
       localStorage.setItem("userEmail", user.email);
+
       window.location = "index.html";
       // ...
     })

@@ -7,20 +7,6 @@
 
     <!-- update the version number as needed -->
     <script defer src="/__/firebase/9.19.1/firebase-app-compat.js"></script>
-    <!-- include only the Firebase features as you need -->
-    <script defer src="/__/firebase/9.19.1/firebase-auth-compat.js"></script>
-    <script defer src="/__/firebase/9.19.1/firebase-database-compat.js"></script>
-    <script defer src="/__/firebase/9.19.1/firebase-firestore-compat.js"></script>
-    <script defer src="/__/firebase/9.19.1/firebase-functions-compat.js"></script>
-    <script defer src="/__/firebase/9.19.1/firebase-messaging-compat.js"></script>
-    <script defer src="/__/firebase/9.19.1/firebase-storage-compat.js"></script>
-    <script defer src="/__/firebase/9.19.1/firebase-analytics-compat.js"></script>
-    <script defer src="/__/firebase/9.19.1/firebase-remote-config-compat.js"></script>
-    <script defer src="/__/firebase/9.19.1/firebase-performance-compat.js"></script>
-    <!-- 
-      initialize the SDK after all desired features are loaded, set useEmulator to false
-      to avoid connecting the SDK to running emulators.
-    -->
     <script defer src="/__/firebase/init.js?useEmulator=true"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   </head>
@@ -33,14 +19,20 @@
       <div class="collapse navbar-collapse" id="navbarText">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item">
-            <script> 
-              // Change login text if user is logged in or not
-              //if (localStorage.getItem("username") === null) {
-                  //...
-              //}
+            <div id="loginNavBarItem"></div>
+            <script defer>
+              // This script is used to display if the user is logged in or not
+              var el = document.getElementById('loginNavBarItem');
+              var content;
 
-            </script>
-            <a class="nav-link" href="login.html" style="color: black;">Login</a>
+              if (localStorage.getItem("userEmail") === null) {
+                content = '<a class="nav-link" href="login.html" style="color: black;">Login</a>';
+              } else {
+                content = 'Welcome, ' + localStorage.getItem("userEmail");
+              }
+                        
+              el.insertAdjacentHTML('afterbegin', content);
+          </script>
           </li>
         </ul>
         <span class="navbar-text" style="color: black;">
@@ -48,5 +40,62 @@
         </span>
       </div>
     </nav>
+
+    <br/>
+
+    <!-- Main container to hold rooms -->
+    <script type="module">
+      import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.19.1/firebase-app.js';
+      // TODO: Add SDKs for Firebase products that you want to use
+      // https://firebase.google.com/docs/web/setup#available-libraries
+
+      // Your web app's Firebase configuration
+      const firebaseConfig = { 
+        apiKey: "AIzaSyClWTm6yvT2-ETV_jOYVkiZQLQWzp2iY2s", 
+        authDomain: "cs3354-roomtracker.firebaseapp.com",
+        projectId: "cs3354-roomtracker",
+        storageBucket: "cs3354-roomtracker.appspot.com",
+        messagingSenderId: "802621464013",
+        appId: "1:802621464013:web:717e234765bd061fddb884"
+      };
+
+      // Initialize Firebase
+      const app = initializeApp(firebaseConfig);
+
+      import { collection, query, where, getDocs, getFirestore } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-firestore.js";
+      const db = getFirestore(app);
+      const querySnapshot = await getDocs(collection(db, "rooms"));
+
+
+      querySnapshot.forEach((doc) => {
+        //https://stackoverflow.com/questions/54706080/generating-dynamic-html-cards-from-a-javascript-array
+        // doc.data() is never undefined for query doc snapshots
+        //console.log(doc.id, " => ", doc.data());
+
+        const container = document.getElementById('accordion');
+
+        // Create card element
+        const card = document.createElement('div');
+        card.classList = 'card-body';
+        var idx = doc.id;
+
+        // Construct card content
+        const content = `
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">${doc.data().building} ${doc.data().roomNumber}</h5>
+            <p class="card-text">Reserved? ${doc.data().reserved}</p>
+            <p class="card-text">${doc.data().items}</p>
+          </div>
+        </div>
+        `;
+          
+        // Append newyly created card element to the container
+        container.innerHTML += content;
+        });
+    </script>
+    <div class="container">
+      <div class="card-group" id="accordion"></div>
+    </div>
   </body>
 </html>
