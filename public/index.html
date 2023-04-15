@@ -19,7 +19,22 @@
       <div class="collapse navbar-collapse" id="navbarText">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item">
-            <a class="nav-link" href="login.html" style="color: black;">Login</a>
+            <div id="loginNavBarItem"></div>
+            <script defer>
+              // This script is used to display if the user is logged in or not
+              var el = document.getElementById('loginNavBarItem');
+              var content;
+
+              if (localStorage.getItem("userEmail") === null) {
+                content = '<a class="nav-link" href="login.html" style="color: black;">Login</a>';
+              } else {
+                content = 'Welcome, ' + localStorage.getItem("userEmail");
+              }
+
+              console.log("inserting " + content + " into the login nav item")
+          
+              el.insertAdjacentHTML('afterbegin', content);
+          </script>
           </li>
         </ul>
         <span class="navbar-text" style="color: black;">
@@ -38,7 +53,7 @@
 
       // Your web app's Firebase configuration
       const firebaseConfig = { 
-        
+        apiKey: "AIzaSyClWTm6yvT2-ETV_jOYVkiZQLQWzp2iY2s", 
         authDomain: "cs3354-roomtracker.firebaseapp.com",
         projectId: "cs3354-roomtracker",
         storageBucket: "cs3354-roomtracker.appspot.com",
