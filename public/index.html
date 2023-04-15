@@ -30,9 +30,7 @@
               } else {
                 content = 'Welcome, ' + localStorage.getItem("userEmail");
               }
-
-              console.log("inserting " + content + " into the login nav item")
-          
+                        
               el.insertAdjacentHTML('afterbegin', content);
           </script>
           </li>
@@ -84,7 +82,6 @@
         // Construct card content
         const content = `
         <div class="card">
-          <img class="card-img-top" src="..." alt="Card image cap">
           <div class="card-body">
             <h5 class="card-title">${doc.data().building} ${doc.data().roomNumber}</h5>
             <p class="card-text">Reserved? ${doc.data().reserved}</p>
