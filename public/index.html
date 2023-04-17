@@ -46,6 +46,10 @@
     <br/>
 
     <!-- Main container to hold rooms -->
+    <script type="module"> 
+      import {reserveRoom} from "./index.js" 
+      window.reserveRoom = reserveRoom;
+    </script> 
     <script type="module">
       import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.19.1/firebase-app.js';
       // TODO: Add SDKs for Firebase products that you want to use
@@ -84,10 +88,12 @@
           const content = `
           <div class="card">
             <div class="card-body">
-              <h5 class="card-title">${doc.data().building} ${doc.data().roomNumber}</h5>
+              <h5 id="roomNameTitle" class="card-title">${doc.data().building} ${doc.data().roomNumber}</h5>
               <p class="card-text">Reserved? ${doc.data().reserved}</p>
               <p class="card-text">${doc.data().items}</p>
+              <p id="roomIDParagrah" hidden>${doc.id}</p>
             </div>
+            <button onclick="reserveRoom(document.getElementById('roomIDParagrah').innerHTML, document.getElementById('roomNameTitle').innerHTML)" class="btn btn-primary">Reserve Room</button>
           </div>
           `;
 

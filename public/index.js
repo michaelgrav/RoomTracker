@@ -18,22 +18,30 @@ const app = initializeApp(firebaseConfig);
 import { collection, doc, getDoc, getDocs, getFirestore, writeBatch } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-firestore.js";
 const db = getFirestore(app);
 
-export async function unreserveRoom(roomID) {
-    console.log("In unreserveRoom with room ID " + roomID);
+export async function reserveRoom(roomID, roomName) {
+    console.log("In reserveRoom with room ID " + roomID);
 
     const docRef = doc(db, "rooms", roomID);
     const docSnap = await getDoc(docRef);
 
     if (docSnap.exists()) {
-        console.log("Document data:", docSnap.data());
+        let startTime = prompt("Please enter the start time", "Start Time");
+        let endTime = prompt("Please enter the end time", "End Time");
 
-        const batch = writeBatch(db);
-        batch.update(docRef, {"reserved": false});
-        batch.update(docRef, {"startResTime": 9999});
-        batch.update(docRef, {"endResTime": 9999});
-        batch.update(docRef, {"reservedBy": ""});
+        // Validate start and end time
+        if (startTime < endTime) {
+            const batch = writeBatch(db);
+            batch.update(docRef, {"reserved": true});
+            batch.update(docRef, {"startResTime": startTime});
+            batch.update(docRef, {"endResTime": endTime});
+            batch.update(docRef, {"reservedBy": localStorage.getItem("userUID")});
 
-        await batch.commit();
+            await batch.commit();
+
+            alert("Room " + roomName + " has been reserved!");
+        } else {
+            alert("Please enter a valid start and end time (start must be before end)");
+        }
     } else {
     // docSnap.data() will be undefined in this case
         console.log("No such document!");
