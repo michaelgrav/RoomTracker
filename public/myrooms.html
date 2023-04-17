@@ -64,6 +64,7 @@
       const db = getFirestore(app);
       const querySnapshot = await getDocs(collection(db, "rooms"));
 
+      var myRooms = 0;
 
       querySnapshot.forEach((doc) => {
         // Only display non-reserved rooms
@@ -91,11 +92,26 @@
 
           // Append newyly created card element to the container
           container.innerHTML += content;
+
+          myRooms++;
         }
         });
+    
+
+        if (myRooms == 0) {
+            const container = document.getElementById('noRooms');
+
+            console.log("I have no rooms");
+            const content = `<br>
+            <h1 style="text-align:center;">You Have No Rooms Reserved!</h1>
+            `;
+
+            container.innerHTML += content;
+        }
     </script>
     <div class="container">
       <div class="card-group" id="accordion"></div>
+      <div id="noRooms"></div>
     </div>
   </body>
 </html>
