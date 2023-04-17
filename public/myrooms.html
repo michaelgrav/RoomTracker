@@ -13,7 +13,7 @@
   </head>
   <body>
     <nav class="navbar navbar-expand-lg navbar-light" style="background-color:#E87500 ;">
-      <a class="navbar-brand" href="#">UTD RoomTracker</a>
+      <a class="navbar-brand" href="index.html">UTD RoomTracker</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -22,18 +22,10 @@
           <li class="nav-item">
             <div id="loginNavBarItem"></div>
             <script defer>
-              // This script is used to display if the user is logged in or not
+              // Display the user's email on their page
               var el = document.getElementById('loginNavBarItem');
-              var content;
-
-              if (localStorage.getItem("userEmail") === null) {
-                content = '<a class="nav-link" href="login.html" style="color: black;">Login</a>';
-              } else {
-                //content = 'Welcome, ' + localStorage.getItem("userEmail");
-                content = '<a class="nav-link" href="myrooms.html" style="color: black;">My Rooms</a>';
-              }
-                        
-              el.insertAdjacentHTML('afterbegin', content);
+              var content = 'Welcome, ' + localStorage.getItem("userEmail");
+              el.insertAdjacentHTML('afterbegin', 'Welcome, ' + localStorage.getItem("userEmail"));
           </script>
           </li>
         </ul>
@@ -47,8 +39,8 @@
 
     <!-- Main container to hold rooms -->
     <script type="module"> 
-      import {reserveRoom} from "./index.js" 
-      window.reserveRoom = reserveRoom;
+        import {unreserveRoom} from "./myrooms.js" 
+        window.unreserveRoom = unreserveRoom;
     </script> 
     <script type="module">
       import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.19.1/firebase-app.js';
@@ -75,25 +67,25 @@
 
       querySnapshot.forEach((doc) => {
         // Only display non-reserved rooms
-        if (doc.data().reserved == false) {
+        if (doc.data().reservedBy == localStorage.getItem("userUID")) {
           const container = document.getElementById('accordion');
 
           // Create card element
           const card = document.createElement('div');
           card.classList = 'card-body';
           var idx = doc.id;
-          //console.log(doc.id);
+
 
           // Construct card content
           const content = `
           <div class="card">
             <div class="card-body">
-              <h5 id="roomNameTitle" class="card-title">${doc.data().building} ${doc.data().roomNumber}</h5>
+              <h5 class="card-title">${doc.data().building} ${doc.data().roomNumber}</h5>
               <p class="card-text">Reserved? ${doc.data().reserved}</p>
               <p class="card-text">${doc.data().items}</p>
               <p id="roomIDParagrah" hidden>${doc.id}</p>
             </div>
-            <button onclick="reserveRoom(document.getElementById('roomIDParagrah').innerHTML, document.getElementById('roomNameTitle').innerHTML)" class="btn btn-primary">Reserve Room</button>
+            <button onclick="unreserveRoom(document.getElementById('roomIDParagrah').innerHTML)" class="btn btn-primary">Unreserve Room</button>
           </div>
           `;
 
