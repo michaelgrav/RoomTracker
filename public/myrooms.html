@@ -13,7 +13,7 @@
   </head>
   <body>
     <nav class="navbar navbar-expand-lg navbar-light" style="background-color:#E87500 ;">
-      <a class="navbar-brand" href="#">UTD RoomTracker</a>
+      <a class="navbar-brand" href="index.html">UTD RoomTracker</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -38,6 +38,10 @@
     <br/>
 
     <!-- Main container to hold rooms -->
+    <script type="module"> 
+        import {unreserveRoom} from "./myrooms.js" 
+        window.unreserveRoom = unreserveRoom;
+    </script> 
     <script type="module">
       import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.19.1/firebase-app.js';
       // TODO: Add SDKs for Firebase products that you want to use
@@ -70,7 +74,7 @@
           const card = document.createElement('div');
           card.classList = 'card-body';
           var idx = doc.id;
-          //console.log(doc.id);
+
 
           // Construct card content
           const content = `
@@ -79,8 +83,9 @@
               <h5 class="card-title">${doc.data().building} ${doc.data().roomNumber}</h5>
               <p class="card-text">Reserved? ${doc.data().reserved}</p>
               <p class="card-text">${doc.data().items}</p>
+              <p id="roomIDParagrah" hidden>${doc.id}</p>
             </div>
-            <button onclick="window.location='createaccount.html';" class="btn btn-primary">Unreserve Room</button>
+            <button onclick="unreserveRoom(document.getElementById('roomIDParagrah').innerHTML)" class="btn btn-primary">Unreserve Room</button>
           </div>
           `;
 
