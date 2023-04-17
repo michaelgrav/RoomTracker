@@ -22,18 +22,10 @@
           <li class="nav-item">
             <div id="loginNavBarItem"></div>
             <script defer>
-              // This script is used to display if the user is logged in or not
+              // Display the user's email on their page
               var el = document.getElementById('loginNavBarItem');
-              var content;
-
-              if (localStorage.getItem("userEmail") === null) {
-                content = '<a class="nav-link" href="login.html" style="color: black;">Login</a>';
-              } else {
-                //content = 'Welcome, ' + localStorage.getItem("userEmail");
-                content = '<a class="nav-link" href="myrooms.html" style="color: black;">My Rooms</a>';
-              }
-                        
-              el.insertAdjacentHTML('afterbegin', content);
+              var content = 'Welcome, ' + localStorage.getItem("userEmail");
+              el.insertAdjacentHTML('afterbegin', 'Welcome, ' + localStorage.getItem("userEmail"));
           </script>
           </li>
         </ul>
@@ -71,7 +63,7 @@
 
       querySnapshot.forEach((doc) => {
         // Only display non-reserved rooms
-        if (doc.data().reserved == false) {
+        if (doc.data().reservedBy == localStorage.getItem("userUID")) {
           const container = document.getElementById('accordion');
 
           // Create card element
@@ -88,6 +80,7 @@
               <p class="card-text">Reserved? ${doc.data().reserved}</p>
               <p class="card-text">${doc.data().items}</p>
             </div>
+            <button onclick="window.location='createaccount.html';" class="btn btn-primary">Unreserve Room</button>
           </div>
           `;
 
