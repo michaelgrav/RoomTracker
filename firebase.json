@@ -5,8 +5,6 @@
   },
   "hosting": {
     "public": "public",
-    "cleanUrls": true,
-    "trailingSlash": true,
     "ignore": [
       "firebase.json",
       "**/.*",
@@ -19,7 +17,7 @@
       "port": 9099
     },
     "firestore": {
-      "port": 8070
+      "port": 9100
     },
     "hosting": {
       "port": 5001
