@@ -39,9 +39,18 @@
               }
                         
               el.insertAdjacentHTML('afterbegin', content);
-          </script>
+            </script>
+          </li>
+          <li class="nav-item">
+            
           </li>
         </ul>
+        <script type="module"> 
+          import {logout} from "./index.js" 
+          window.logout = logout;
+        </script> 
+        <button class="btn btn-sm btn-primary mr-3" onclick="logout()" type="button">Logout</button>
+        
         <span class="navbar-text" style="color: black;">
           Made with ❤️ by Group 14
         </span>
@@ -87,20 +96,9 @@
           const card = document.createElement('div');
           card.classList = 'card-body';
           var idx = doc.id;
-          //console.log(doc.id);
 
           // Construct card content
-          const content = /*`
-          <div class="card">
-            <div class="card-body">
-              <h3 id="roomNameTitle" class="card-title">${doc.data().building} ${doc.data().roomNumber}</h5>
-              <p class="card-text">Room Items: ${doc.data().items}</p>
-              <p id="roomIDParagrah" hidden>${doc.id}</p>
-            </div>
-            <button onclick="reserveRoom(document.getElementById('roomIDParagrah').innerHTML, document.getElementById('roomNameTitle').innerHTML)" class="btn btn-primary">Reserve Room</button>
-          </div>
-          `; */
-
+          const content = 
           `<div class="card border-dark mb-3" style="max-width: 18rem;">
             <div class="card-header">Open Room</div>
             <div class="card-body text-dark">
