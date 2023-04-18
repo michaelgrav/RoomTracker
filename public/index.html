@@ -90,17 +90,26 @@
           //console.log(doc.id);
 
           // Construct card content
-          const content = `
+          const content = /*`
           <div class="card">
             <div class="card-body">
-              <h5 id="roomNameTitle" class="card-title">${doc.data().building} ${doc.data().roomNumber}</h5>
-              <p class="card-text">Reserved? ${doc.data().reserved}</p>
-              <p class="card-text">${doc.data().items}</p>
+              <h3 id="roomNameTitle" class="card-title">${doc.data().building} ${doc.data().roomNumber}</h5>
+              <p class="card-text">Room Items: ${doc.data().items}</p>
               <p id="roomIDParagrah" hidden>${doc.id}</p>
             </div>
             <button onclick="reserveRoom(document.getElementById('roomIDParagrah').innerHTML, document.getElementById('roomNameTitle').innerHTML)" class="btn btn-primary">Reserve Room</button>
           </div>
-          `;
+          `; */
+
+          `<div class="card border-dark mb-3" style="max-width: 18rem;">
+            <div class="card-header">Open Room</div>
+            <div class="card-body text-dark">
+              <h5 id="roomNameTitle" class="card-title">${doc.data().building} ${doc.data().roomNumber}</h5>
+              <p class="card-text">Room Items: ${doc.data().items}</p>
+              <p id="roomIDParagrah" hidden>${doc.id}</p>
+            </div>
+            <button onclick="reserveRoom(document.getElementById('roomIDParagrah').innerHTML, document.getElementById('roomNameTitle').innerHTML)" class="btn btn-primary">Reserve Room</button>
+          </div>`;
 
           // Append newyly created card element to the container
           container.innerHTML += content;
@@ -108,7 +117,7 @@
         });
     </script>
     <div class="container">
-      <div class="card-group" id="accordion"></div>
+      <div class="card-deck" id="accordion"></div>
     </div>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
