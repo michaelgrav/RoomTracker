@@ -19,8 +19,6 @@ import { collection, doc, getDoc, getDocs, getFirestore, writeBatch } from "http
 const db = getFirestore(app);
 
 export async function unreserveRoom(roomID) {
-    console.log("In unreserveRoom with room ID " + roomID);
-
     const docRef = doc(db, "rooms", roomID);
     const docSnap = await getDoc(docRef);
 
