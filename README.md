@@ -21,9 +21,11 @@ After creating an account the website will display the list of avaliable rooms t
 
 ## Room Reservation
 
-After selecting a room to reserve and entering the start and end time for the reservation (in military time) the website will display that the room was reserved
+After selecting a room to reserve and entering the start and end time for the reservation (in military time) the website will display that the room was reserved 
+
 <img width="451" alt="image" src="https://user-images.githubusercontent.com/29133471/233485926-1f153349-0379-4e5f-b156-4365c4e359ed.png">
 
-You can navigate to your rooms and the room(s) that you reserved will appear
+You can navigate to your rooms and the room(s) that you reserved will appear 
+
 <img width="1680" alt="image" src="https://user-images.githubusercontent.com/29133471/233486054-0514d453-76b1-42ee-a893-10397bb3b7bc.png">
 
