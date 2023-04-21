@@ -24,8 +24,6 @@
             <script defer>
               // Display the user's email on their page
               var el = document.getElementById('loginNavBarItem');
-              var content = 'Welcome, ' + localStorage.getItem("userEmail");
-              el.insertAdjacentHTML('afterbegin', 'Welcome, ' + localStorage.getItem("userEmail"));
           </script>
           </li>
         </ul>
@@ -75,18 +73,18 @@
           const card = document.createElement('div');
           card.classList = 'card-body';
           var idx = doc.id;
-
+          var itemStr = doc.data().items.join(", ")
 
           // Construct card content
           const content = `
           <div class="card">
+            <div class="card-header"><h5 class="card-title">${doc.data().building} ${doc.data().roomNumber}</h5></div>
             <div class="card-body">
-              <h5 class="card-title">${doc.data().building} ${doc.data().roomNumber}</h5>
-              <p class="card-text">Reserved? ${doc.data().reserved}</p>
-              <p class="card-text">${doc.data().items}</p>
+              <p class="card-text">Room items:</p>
+              <p class="card-text">${itemStr}</p>
               <p id="roomIDParagrah" hidden>${doc.id}</p>
             </div>
-            <button onclick="unreserveRoom(document.getElementById('roomIDParagrah').innerHTML)" class="btn btn-primary">Unreserve Room</button>
+            <button onclick="unreserveRoom(document.getElementById('roomIDParagrah').innerHTML)" class="btn btn-primary" style="background-color: #154734; border: none; border-radius: 0px;">Unreserve Room</button>
           </div>
           `;
 

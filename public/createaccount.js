@@ -53,6 +53,7 @@ async function addUserToDB(userUID, userEmail, fName, lName) {
 
     try {
         const docRef = await addDoc(collection(db, "users"), {
+            admin: false,
             uid: userUID,
             email: userEmail,
             numRoomsReserved: 0,
@@ -61,7 +62,8 @@ async function addUserToDB(userUID, userEmail, fName, lName) {
             lastName: lName
         });
         console.log("Document written with ID: ", docRef.id);
-
+        
+        localStorage.setItem("adminStatus", false);
         localStorage.setItem("userUID", userUID);
         localStorage.setItem("userEmail", userEmail);
         localStorage.setItem("userFName", fName);
