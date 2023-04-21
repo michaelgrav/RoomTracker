@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" href="/favicon.ico" type="image/x-icon">
     <title>UTD Room Tracker</title>
+
+    <!-- update the version number as needed -->
+    <script defer src="/__/firebase/9.19.1/firebase-app-compat.js"></script>
+    <script defer src="/__/firebase/init.js?useEmulator=true"></script>
+
     <script>
       if (localStorage.getItem("userUID") == null) {
         window.location = "login.html";
@@ -48,23 +53,25 @@
           import {logout} from "./index.js" 
           window.logout = logout;
         </script> 
-        <button class="btn btn-sm btn-primary mr-3" onclick="logout()" type="button" style="background-color: #154734; border: none;">Logout</button>
+        <button class="btn btn-sm btn-primary mr-3" onclick="logout()" type="button"  style="background-color: #154734; border: none;">Logout</button>
+        
       </div>
     </nav>
 
     <br/>
 
     <div class="container">
-      <h2>Available Rooms</h2>
+      <h2>Admin Dashboard</h2>
+      <button class="btn btn-primary"  style="background-color: #154734; border: none; margin-top: 5px;" onclick="window.location='createRoom.html';">Add Room</button>
     </div>
-
-    <!-- Main container to hold rooms -->
     <script type="module"> 
-      import {reserveRoom} from "./index.js" 
-      window.reserveRoom = reserveRoom;
-    </script> 
-    <script type="module">
+      import { cancelReservation, deleteRoom } from "./admin_dashboard.js";
+      window.cancelReservation = cancelReservation;
+      window.deleteRoom = deleteRoom;
+    </script>
+      <script type="module">
       import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.19.1/firebase-app.js';
+      
       // TODO: Add SDKs for Firebase products that you want to use
       // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -87,8 +94,6 @@
 
 
       querySnapshot.forEach((doc) => {
-        // Only display non-reserved rooms
-        if (doc.data().reserved == false) {
           const container = document.getElementById('accordion');
 
           // Create card element
@@ -97,21 +102,35 @@
           var idx = doc.id;
           var itemStr = doc.data().items.join(", ")
 
+          var cancelReservation = `<button class="btn btn-primary"  style="background-color: #808080; border: none; border-radius: 0px;">Not reserved</button>`;
+          var requestButton = "";
+
+          var resStatus = "Open"
+
+          if (doc.data().reserved == true)
+          {
+            cancelReservation = `<button onclick="cancelReservation(document.getElementById('roomIDParagrah').innerHTML)" class="btn btn-primary"  style="background-color: #154734; border-bottom: none; border-left: none; border-right: none; border-top: solid white; border-radius: 0px;">Cancel reservation?</button>`;
+            resStatus = "Reserved"
+          }
+          
           // Construct card content
           const content = 
           `<div class="card border-dark mb-3" style="min-width: 15rem;">
-            <div class="card-header">Open Room</div>
+            <div class="card-header">
+              <h5 id="roomNameTitle" class="card-title" style="margin-bottom: 0px;">${doc.data().building} ${doc.data().roomNumber}</h5>
+            </div>
             <div class="card-body text-dark">
-              <h5 id="roomNameTitle" class="card-title">${doc.data().building} ${doc.data().roomNumber}</h5>
-              <p class="card-text">Room Items: ${itemStr}</p>
+              <p class="card-text" style="margin-bottom: 0.5rem">Room Items:</p>
+              <p style="margin-bottom: 0rem">${itemStr}<p>
               <p id="roomIDParagrah" hidden>${doc.id}</p>
             </div>
-            <button onclick="reserveRoom(document.getElementById('roomIDParagrah').innerHTML, document.getElementById('roomNameTitle').innerHTML)" class="btn btn-primary"  style="background-color: #154734; border: none; border-radius: 0px;">Reserve Room</button>
+            <div class="card-header" style="text-align: center;">Status: ${resStatus}</div>
+            <button onclick="deleteRoom(document.getElementById('roomIDParagrah').innerHTML)" class="btn btn-primary"  style="background-color: #154734; border: none; border-radius: 0px;">Delete from roster?</button>` + cancelReservation + `
           </div>`;
 
           // Append newyly created card element to the container
           container.innerHTML += content;
-        }
+
         });
 
         if (localStorage.getItem("adminStatus") === null)
@@ -129,16 +148,17 @@
           localStorage.setItem("adminStatus", adminStatus);
         }
     </script>
-    <div class="container">
+    <div class="container" style="margin-top: 50px;">
       <div class="card-deck" id="accordion"></div>
     </div>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-    
+
     <footer style="position: fixed; left: 0; bottom: 0; width: 100%; background-color:#E87500; text-align: center; padding: 10px;">
+      <!--  style="background-color: #154734; border: none;" -->
       Made with ❤️ by Group 14
     </footer>
-
+    
   </body>
 </html>

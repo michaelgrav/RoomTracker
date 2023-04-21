@@ -17,18 +17,38 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 
 import { getAuth, signInWithEmailAndPassword } from 'https://www.gstatic.com/firebasejs/9.19.1/firebase-auth.js';
-
 const auth = getAuth();
+
+
+// export async function checkAdmin(id)
+// {
+//     var q = query(collection(db, "users"), where("uid", "==", id));
+//     const querySnapshot = await getDocs(q);
+//     var adminStatus = null;
+//     querySnapshot.forEach((doc) =>
+//     {
+//       // doc.data() is never undefined for query doc snapshots
+//       console.log(doc.id, " => ", doc.data());
+//       adminStatus = doc.data().admin
+//     });
+
+//     localStorage.setItem("adminStatus", adminStatus);
+//     console.log("Admin status from login, DB call:", adminStatus);
+//     console.log("Admin status from login, localstorage save:", localStorage.getItem("adminStatus"));
+// }
 
 export function login(email, password) {
   signInWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
-      // Signed in 
+      // Signed in
       const user = userCredential.user;
       localStorage.setItem("userUID", user.uid);
       localStorage.setItem("userEmail", user.email);
 
+
       window.location = "index.html";
+
+      
       // ...
     })
     .catch((error) => {
