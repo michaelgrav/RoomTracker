@@ -1,3 +1,5 @@
+import {reserveRoom} from "./index.js" 
+
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.19.1/firebase-app.js';
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -54,7 +56,7 @@ export async function searchRoom(roomNameInitials) {
             <p class="card-text">Room Items: ${itemStr}</p>
             <p id="roomIDParagrah" hidden>${doc.id}</p>
         </div>
-        <button onclick="unreserveRoom(document.getElementById('roomIDParagrah').innerHTML)" class="btn btn-primary"  style="background-color: #154734; border: none; border-radius: 0px;">Unreserve Room</button>
+        <button onclick="reserveRoom(document.getElementById('roomIDParagrah').innerHTML, document.getElementById('roomNameTitle').innerHTML)" class="btn btn-primary"  style="background-color: #154734; border: none; border-radius: 0px;">Reserve Room</button>
         </div>`;
 
         // Append newyly created card element to the container
