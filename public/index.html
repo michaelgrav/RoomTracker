@@ -66,9 +66,9 @@
       import {reserveRoom, populateIndexRooms} from "./index.js" 
       window.reserveRoom = reserveRoom;
       window.populateIndexRooms = populateIndexRooms;
-    </script> 
 
-    <body onload="populateIndexRooms()"></body>
+      window.onload = populateIndexRooms
+    </script> 
     <div class="container">
       <div class="card-deck" id="accordion"></div>
     </div>
