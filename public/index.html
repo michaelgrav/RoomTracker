@@ -60,75 +60,12 @@
 
     <!-- Main container to hold rooms -->
     <script type="module"> 
-      import {reserveRoom} from "./index.js" 
+      import {reserveRoom, populateIndexRooms} from "./index.js" 
       window.reserveRoom = reserveRoom;
+      window.populateIndexRooms = populateIndexRooms;
     </script> 
-    <script type="module">
-      import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.19.1/firebase-app.js';
-      // TODO: Add SDKs for Firebase products that you want to use
-      // https://firebase.google.com/docs/web/setup#available-libraries
 
-      // Your web app's Firebase configuration
-      const firebaseConfig = { 
-        apiKey: "AIzaSyClWTm6yvT2-ETV_jOYVkiZQLQWzp2iY2s", 
-        authDomain: "cs3354-roomtracker.firebaseapp.com",
-        projectId: "cs3354-roomtracker",
-        storageBucket: "cs3354-roomtracker.appspot.com",
-        messagingSenderId: "802621464013",
-        appId: "1:802621464013:web:717e234765bd061fddb884"
-      };
-
-      // Initialize Firebase
-      const app = initializeApp(firebaseConfig);
-
-      import { collection, query, where, getDocs, getFirestore } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-firestore.js";
-      const db = getFirestore(app);
-      const querySnapshot = await getDocs(collection(db, "rooms"));
-
-
-      querySnapshot.forEach((doc) => {
-        // Only display non-reserved rooms
-        if (doc.data().reserved == false) {
-          const container = document.getElementById('accordion');
-
-          // Create card element
-          const card = document.createElement('div');
-          card.classList = 'card-body';
-          var idx = doc.id;
-          var itemStr = doc.data().items.join(", ")
-
-          // Construct card content
-          const content = 
-          `<div class="card border-dark mb-3" style="min-width: 15rem;">
-            <div class="card-header">Open Room</div>
-            <div class="card-body text-dark">
-              <h5 id="roomNameTitle" class="card-title">${doc.data().building} ${doc.data().roomNumber}</h5>
-              <p class="card-text">Room Items: ${itemStr}</p>
-              <p id="roomIDParagrah" hidden>${doc.id}</p>
-            </div>
-            <button onclick="reserveRoom(document.getElementById('roomIDParagrah').innerHTML, document.getElementById('roomNameTitle').innerHTML)" class="btn btn-primary"  style="background-color: #154734; border: none; border-radius: 0px;">Reserve Room</button>
-          </div>`;
-
-          // Append newyly created card element to the container
-          container.innerHTML += content;
-        }
-        });
-
-        if (localStorage.getItem("adminStatus") === null)
-        {
-          var q = query(collection(db, "users"), where("uid", "==", localStorage.getItem("userUID")));
-          var querySnapshotUser = await getDocs(q);
-          var adminStatus = null;
-          querySnapshotUser.forEach((doc) =>
-          {
-            // doc.data() is never undefined for query doc snapshots
-            console.log(doc.id, " => ", doc.data());
-            adminStatus = doc.data().admin
-          });
-
-          localStorage.setItem("adminStatus", adminStatus);
-        }
-    </script>
+    <body onload="populateIndexRooms()"></body>
     <div class="container">
       <div class="card-deck" id="accordion"></div>
     </div>

@@ -15,9 +15,11 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 
-import { collection, doc, getDoc, getDocs, getFirestore, writeBatch } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-firestore.js";
+import { collection, query, where, doc, getDoc, getDocs, getFirestore, writeBatch } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-firestore.js";
 const db = getFirestore(app);
 
+
+// Function to reserve a room
 export async function reserveRoom(roomID, roomName) {
     const docRef = doc(db, "rooms", roomID);
     const docSnap = await getDoc(docRef);
@@ -46,6 +48,53 @@ export async function reserveRoom(roomID, roomName) {
     }
 
     location.reload();
+}
+
+// Function to get all of the rooms and display them
+export async function populateIndexRooms() {
+    const querySnapshot = await getDocs(collection(db, "rooms"));
+    querySnapshot.forEach((doc) => {
+      // Only display non-reserved rooms
+      if (doc.data().reserved == false) {
+        const container = document.getElementById('accordion');
+
+        // Create card element
+        const card = document.createElement('div');
+        card.classList = 'card-body';
+        var idx = doc.id;
+        var itemStr = doc.data().items.join(", ")
+
+        // Construct card content
+        const content = 
+        `<div class="card border-dark mb-3" style="min-width: 15rem;">
+          <div class="card-header">Open Room</div>
+          <div class="card-body text-dark">
+            <h5 id="roomNameTitle" class="card-title">${doc.data().building} ${doc.data().roomNumber}</h5>
+            <p class="card-text">Room Items: ${itemStr}</p>
+            <p id="roomIDParagrah" hidden>${doc.id}</p>
+          </div>
+          <button onclick="reserveRoom(document.getElementById('roomIDParagrah').innerHTML, document.getElementById('roomNameTitle').innerHTML)" class="btn btn-primary"  style="background-color: #154734; border: none; border-radius: 0px;">Reserve Room</button>
+        </div>`;
+
+        // Append newyly created card element to the container
+        container.innerHTML += content;
+      }
+      });
+
+      if (localStorage.getItem("adminStatus") === null)
+      {
+        var q = query(collection(db, "users"), where("uid", "==", localStorage.getItem("userUID")));
+        var querySnapshotUser = await getDocs(q);
+        var adminStatus = null;
+        querySnapshotUser.forEach((doc) =>
+        {
+          // doc.data() is never undefined for query doc snapshots
+          console.log(doc.id, " => ", doc.data());
+          adminStatus = doc.data().admin
+        });
+
+        localStorage.setItem("adminStatus", adminStatus);
+      }
 }
 
 export function logout() {
