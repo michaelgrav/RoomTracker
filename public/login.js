@@ -38,22 +38,30 @@ const auth = getAuth();
 // }
 
 export function login(email, password) {
-  signInWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-      // Signed in
-      const user = userCredential.user;
-      localStorage.setItem("userUID", user.uid);
-      localStorage.setItem("userEmail", user.email);
+  if(ValidateEmail(email)) {
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        // Signed in
+        const user = userCredential.user;
+        localStorage.setItem("userUID", user.uid);
+        localStorage.setItem("userEmail", user.email);
+        window.location = "index.html";
+      })
+      .catch((error) => {
+        console.log("Invalid email or password")
+        const errorCode = error.code;
+        const errorMessage = error.message;
+      });
+  } else {
+    alert("Invalid email address format!");
+  }
+}
 
-
-      window.location = "index.html";
-
-      
-      // ...
-    })
-    .catch((error) => {
-      console.log("Invalid email or password")
-      const errorCode = error.code;
-      const errorMessage = error.message;
-    });
+function ValidateEmail(inputText) {
+  var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+  if(inputText.match(mailformat)) {
+      return true;
+  } else {
+      return false;
+  }
 }
