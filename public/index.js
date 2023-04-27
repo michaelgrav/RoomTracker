@@ -25,11 +25,12 @@ export async function reserveRoom(roomID, roomName) {
     const docSnap = await getDoc(docRef);
 
     if (docSnap.exists()) {
-        let startTime = prompt("Please enter the start time", "Start Time");
+      let startTime = prompt("Please enter the start time", "Start Time");
+      // Validate start and end time
+      if (validateTime(startTime)) {
         let endTime = prompt("Please enter the end time", "End Time");
-
-        // Validate start and end time
-        if (startTime < endTime) {
+        if (validateTime(endTime)) {
+          if (startTime < endTime) {
             const batch = writeBatch(db);
             batch.update(docRef, {"reserved": true});
             batch.update(docRef, {"startResTime": startTime});
@@ -39,15 +40,36 @@ export async function reserveRoom(roomID, roomName) {
             await batch.commit();
 
             alert("Room " + roomName + " has been reserved!");
-        } else {
-            alert("Please enter a valid start and end time (start must be before end)");
+            location.reload();
+          } else {
+            alert("Start time must be before end time")
+          }
         }
-    } else {
+      } 
+  } else {
     // docSnap.data() will be undefined in this case
-        console.log("No such document!");
-    }
+    console.log("No such document!");
+  }
+}
 
-    location.reload();
+function validateTime(time) {
+  if(time == "" || time == null || time == "Start Time" || time == "End Time") {
+    return false
+  }
+
+  else if (time <= 0) {
+    alert("Time must be greater than 0")
+    return false
+  }
+
+  else if (time > 2300) {
+    alert("Time must not be greater than 2300")
+    return false
+  }
+
+  else {
+    return true
+  }
 }
 
 // Function to get all of the rooms and display them
@@ -100,4 +122,5 @@ export async function populateIndexRooms() {
 export function logout() {
     localStorage.clear();
     location.reload();
+    window.location = "login.html";
 }
