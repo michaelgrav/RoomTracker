@@ -26,21 +26,38 @@ export function createAccount(email, password, fName, lName) {
     console.log("fname in createAccount:" + fName);
     console.log("lname in createAccount:" +lName);
 
-    createUserWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-        // Signed in 
-        const user = userCredential.user;
-        console.log(user);
-        console.log("user uid " + user.uid);
-        console.log("user emai " + user.email);
-        addUserToDB(user.uid, user.email, fName, lName)
-        // ...
-    })
-    .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        // ..
-    });
+    if(ValidateEmail(email)) {
+        if (fName == "" || fName == null || lName == "" || lName == null) {
+            alert("First name or last name is blank!");
+        } else {
+            createUserWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
+                // Signed in 
+                const user = userCredential.user;
+                console.log(user);
+                console.log("user uid " + user.uid);
+                console.log("user emai " + user.email);
+                addUserToDB(user.uid, user.email, fName, lName)
+                // ...
+            })
+            .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                // ..
+            });
+        }
+    } else {
+        alert("Invalid email address format!");
+    }
+}
+
+function ValidateEmail(inputText) {
+    var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    if(inputText.match(mailformat)) {
+        return true;
+    } else {
+        return false;
+    }
 }
 
 
