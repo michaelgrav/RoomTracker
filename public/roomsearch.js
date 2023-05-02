@@ -47,10 +47,18 @@ export async function searchRoom(roomNameInitials) {
         var idx = doc.id;
         var itemStr = doc.data().items.join(", ")
 
+        var headerText = "";
+
+        if(doc.data().reserved) {
+            headerText = "This Room Has Already Been Reserved ❌"
+        } else {
+            headerText = "This Room Can Be Reserved ✅"
+        }
+
         // Construct card content
         const content = `
         <div class="card border-dark mb-3" style="min-width: 15rem;">
-        <div class="card-header">Can The Room Be Reserved? ${!doc.data().reserved}</div>
+        <div class="card-header">${headerText}</div> 
         <div class="card-body text-dark">
             <h5 id="roomNameTitle" class="card-title">${doc.data().building} ${doc.data().roomNumber}</h5>
             <p class="card-text">Room Items: ${itemStr}</p>
