@@ -1,0 +1,13 @@
+{
+  "devDependencies": {
+    "@babel/cli": "^7.21.0",
+    "@babel/core": "^7.21.4",
+    "@babel/preset-flow": "^7.21.4",
+    "@hegel/cli": "^0.0.45",
+    "@typescript-eslint/eslint-plugin": "^5.59.1",
+    "@typescript-eslint/parser": "^5.59.1",
+    "eslint": "^8.39.0",
+    "flow-bin": "^0.205.0",
+    "typescript": "^5.0.4"
+  }
+}
